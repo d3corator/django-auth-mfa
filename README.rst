@@ -16,27 +16,27 @@ in Django Rest Framework using JSON Web Token terminology.
                  Quick Start
                 =============
 
-1.  Add "django_auth_mfa" to your INSTALLED_APPS setting like this:
+1.  Add "auth_mfa" to your INSTALLED_APPS setting like this:
 
         INSTALLED_APPS = [
                 ...
-                'django_auth_mfa',
+                'auth_mfa',
                 ...
         ]
 
-2.  Include the django_auth_mfa URLconf in your project urls.py like this:
+2.  Include the auth_mfa URLconf in your project urls.py like this:
 
-        path('', include('django_auth_mfa.urls')),
+        path('', include('auth_mfa.urls')),
 
 3.  Now add following code in your project settings.py file
 
         REST_FRAMEWORK = {
             'DEFAULT_AUTHENTICATION_CLASSES': (
-                'django_auth_mfa.authentication.MultiFactorJWTAuthentication',
+                'auth_mfa.authentication.MultiFactorJWTAuthentication',
             )
         }
 
-4.  Run ``python manage.py migrate`` to create the django_auth_mfa models.
+4.  Run ``python manage.py migrate`` to create the auth_mfa models.
 
 5.  You are all set to go now.....!
 
@@ -123,7 +123,7 @@ To add custom payload in token:
 
 1.  In serializers.py file,
 
-    from django_auth_mfa.serializers import MultiFactorTokenObtainPairSerializer
+    from auth_mfa.serializers import MultiFactorTokenObtainPairSerializer
 
     class MyTokenObtainPairSerializer(MultiFactorTokenObtainPairSerializer):
         token = super().get_token(user)
@@ -146,12 +146,12 @@ To add custom payload in token:
         serializer_class = MyTokenObtainPairSerializer
 
 
-3.  Now in your project's urls.py file add following path before URLs of "django_auth_mfa" urls.
+3.  Now in your project's urls.py file add following path before URLs of "auth_mfa" urls.
 
         urlpatterns = [
             ...
             path('mfa/token/', MultiFactorTokenObtainPairView.as_view()),
-            path('', include('django_auth_mfa.urls')),
+            path('', include('auth_mfa.urls')),
             ...
         ]
 
